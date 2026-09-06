@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+{% block title %}Ongeza Mteja{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Ongeza Mteja Mpya</h2>
+
+<div class="row">
+    <div class="col-md-6">
+        <form method="POST">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="mb-3">
+                <label class="form-label">{{ field.label }}</label>
+                {{ field }}
+                {% if field.errors %}
+                <div class="text-danger small">{{ field.errors }}</div>
+                {% endif %}
+            </div>
+            {% endfor %}
+            <button type="submit" class="btn btn-primary">Hifadhi Mteja</button>
+            <a href="{% url 'customer_list' %}" class="btn btn-secondary">Ghairi</a>
+        </form>
+    </div>
+</div>
+{% endblock %}

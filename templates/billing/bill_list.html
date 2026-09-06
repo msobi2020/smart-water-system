@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block title %}Ankara - Smart Water System{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Orodha ya Ankara</h2>
+
+<a href="{% url 'add_bill' %}" class="btn btn-success mb-3">+ Tengeneza Ankara Mpya</a>
+<a href="{% url 'add_payment' %}" class="btn btn-primary mb-3">+ Rekodi Malipo</a>
+
+<table class="table table-striped table-bordered">
+    <thead class="table-primary">
+        <tr>
+            <th>#</th>
+            <th>Mita</th>
+            <th>Mwezi</th>
+            <th>Units Zilizotumika</th>
+            <th>Kiasi (TZS)</th>
+            <th>Hali</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for bill in bills %}
+        <tr>
+            <td>{{ bill.id }}</td>
+            <td>{{ bill.meter.meter_number }}</td>
+            <td>{{ bill.billing_month|date:"M Y" }}</td>
+            <td>{{ bill.current_reading|floatformat:0 }} - {{ bill.previous_reading|floatformat:0 }}</td>
+            <td>{{ bill.amount_due|floatformat:2 }}</td>
+            <td>
+                {% if bill.status == 'paid' %}
+                <span class="badge bg-success">Paid</span>
+                {% elif bill.status == 'overdue' %}
+                <span class="badge bg-danger">Overdue</span>
+                {% else %}
+                <span class="badge bg-warning text-dark">Unpaid</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6" class="text-center text-muted">Hakuna ankara zilizotengenezwa bado.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

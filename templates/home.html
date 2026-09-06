@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+{% block title %}Home - Smart Water System{% endblock %}
+
+{% block content %}
+<h1 class="mb-4">Karibu kwenye Smart Water System</h1>
+<p class="text-muted">Mfumo wa usimamizi wa huduma za maji - Kahama</p>
+
+<div class="row mt-4">
+    <div class="col-md-3 mb-3">
+        <div class="card text-center border-primary">
+            <div class="card-body">
+                <h5 class="card-title">Wateja</h5>
+                <p class="display-6">{{ total_customers }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card text-center border-success">
+            <div class="card-body">
+                <h5 class="card-title">Mita</h5>
+                <p class="display-6">{{ total_meters }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card text-center border-warning">
+            <div class="card-body">
+                <h5 class="card-title">Ankara Zisizolipwa</h5>
+                <p class="display-6">{{ unpaid_bills }}</p>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-3 mb-3">
+        <div class="card text-center border-danger">
+            <div class="card-body">
+                <h5 class="card-title">Malalamiko Wazi</h5>
+                <p class="display-6">{{ open_complaints }}</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,67 @@
+{% extends 'base.html' %}
+{% block title %}Dashboard Yangu{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Karibu, {{ customer.full_name }}</h2>
+
+<h4 class="mt-4">Mita Zangu</h4>
+<table class="table table-bordered">
+    <thead class="table-primary">
+        <tr><th>Namba ya Mita</th><th>Eneo</th><th>Hali</th></tr>
+    </thead>
+    <tbody>
+        {% for meter in meters %}
+        <tr>
+            <td>{{ meter.meter_number }}</td>
+            <td>{{ meter.location }}</td>
+            <td>{{ meter.get_status_display }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3" class="text-center text-muted">Huna mita zilizosajiliwa.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h4 class="mt-4">Ankara Zangu</h4>
+<table class="table table-bordered">
+    <thead class="table-primary">
+        <tr><th>Mwezi</th><th>Kiasi (TZS)</th><th>Hali</th></tr>
+    </thead>
+    <tbody>
+        {% for bill in bills %}
+        <tr>
+            <td>{{ bill.billing_month|date:"M Y" }}</td>
+            <td>{{ bill.amount_due|floatformat:2 }}</td>
+            <td>
+                {% if bill.status == 'paid' %}
+                <span class="badge bg-success">Paid</span>
+                {% else %}
+                <span class="badge bg-warning text-dark">Unpaid</span>
+                {% endif %}
+            </td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3" class="text-center text-muted">Huna ankara bado.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+<h4 class="mt-4">Malalamiko Yangu</h4>
+<a href="{% url 'add_complaint' %}" class="btn btn-success mb-3">+ Wasilisha Malalamiko Mapya</a>
+<table class="table table-bordered">
+    <thead class="table-primary">
+        <tr><th>Aina</th><th>Maelezo</th><th>Hali</th></tr>
+    </thead>
+    <tbody>
+        {% for complaint in complaints %}
+        <tr>
+            <td>{{ complaint.get_category_display }}</td>
+            <td>{{ complaint.description|truncatewords:10 }}</td>
+            <td>{{ complaint.status }}</td>
+        </tr>
+        {% empty %}
+        <tr><td colspan="3" class="text-center text-muted">Huna malalamiko.</td></tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}

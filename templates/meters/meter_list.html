@@ -1,0 +1,37 @@
+{% extends 'base.html' %}
+{% block title %}Mita - Smart Water System{% endblock %}
+
+{% block content %}
+<h2 class="mb-4">Orodha ya Mita</h2>
+
+<a href="{% url 'add_meter' %}" class="btn btn-success mb-3">+ Ongeza Mita Mpya</a>
+
+<table class="table table-striped table-bordered">
+    <thead class="table-primary">
+        <tr>
+            <th>#</th>
+            <th>Namba ya Mita</th>
+            <th>Mteja</th>
+            <th>Eneo</th>
+            <th>Tarehe ya Ufungaji</th>
+            <th>Hali</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for meter in meters %}
+        <tr>
+            <td>{{ forloop.counter }}</td>
+            <td>{{ meter.meter_number }}</td>
+            <td>{{ meter.customer.full_name }}</td>
+            <td>{{ meter.location }}</td>
+            <td>{{ meter.installation_date|date:"d/m/Y" }}</td>
+            <td>{{ meter.get_status_display }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="6" class="text-center text-muted">Hakuna mita zilizosajiliwa bado.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
