@@ -1,10 +1,12 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
+from django.contrib.auth.models import User
 from customers.models import Customer
 from meters.models import Meter
 from billing.models import Bill
 from complaints.models import Complaint
+from .forms import CustomerRegistrationForm
 
 
 def home(request):
@@ -53,3 +55,29 @@ def customer_dashboard(request):
         'complaints': complaints,
     }
     return render(request, 'customer_dashboard.html', context)
+
+
+def register(request):
+    if request.method == 'POST':
+        form = CustomerRegistrationForm(request.POST)
+        if form.is_valid():
+            data = form.cleaned_data
+            user = User.objects.create_user(
+                username=data['username'],
+                password=data['password'],
+                email=data.get('email', '')
+            )
+            Customer.objects.create(
+                user=user,
+                full_name=data['full_name'],
+                phone_number=data['phone_number'],
+                email=data.get('email'),
+                address=data['address'],
+                ward=data.get('ward'),
+                national_id=data.get('national_id'),
+            )
+            login(request, user)
+            return redirect('customer_dashboard')
+    else:
+        form = CustomerRegistrationForm()
+    return render(request, 'register.html', {'form': form})

@@ -21,4 +21,5 @@ urlpatterns = [
     path('bills/payment/add/', billing_views.add_payment, name='add_payment'),
     path('complaints/', complaint_views.complaint_list, name='complaint_list'),
     path('complaints/add/', complaint_views.add_complaint, name='add_complaint'),
+    path('register/', core_views.register, name='register'),
 ]
